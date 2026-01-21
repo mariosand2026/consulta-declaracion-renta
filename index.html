@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Debo Declarar Renta?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📊 ¿Debes Declarar Renta en Colombia? (2025)</h1>
+    <p><strong>Año gravable:</strong> 2024 | <strong>Topes DIAN 2025</strong></p>
+    
+    <form id="rentaForm">
+      <div class="input-group">
+        <label>1. Patrimonio bruto al 31/12/2024 ($)</label>
+        <input type="number" id="patrimonio" placeholder="Ej: 250000000" required>
+      </div>
+
+      <div class="input-group">
+        <label>2. Ingresos totales en 2024 ($)</label>
+        <input type="number" id="ingresos" placeholder="Ej: 70000000" required>
+      </div>
+
+      <div class="input-group">
+        <label>3. Consumos con tarjeta de crédito ($)</label>
+        <input type="number" id="consumosTC" placeholder="Ej: 30000000" required>
+      </div>
+
+      <div class="input-group">
+        <label>4. Depósitos/inversiones financieras ($)</label>
+        <input type="number" id="depositos" placeholder="Ej: 20000000" required>
+      </div>
+
+      <div class="input-group">
+        <label>5. Compras y consumos (sin TC) ($)</label>
+        <input type="number" id="compras" placeholder="Ej: 10000000" required>
+      </div>
+
+      <div class="input-group">
+        <label>6. ¿Eres responsable de IVA?</label>
+        <select id="responsableIVA" required>
+          <option value="">Selecciona...</option>
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <button type="submit">Verificar</button>
+    </form>
+
+    <div id="resultado" class="resultado"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
