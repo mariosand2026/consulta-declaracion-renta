@@ -1,105 +1,123 @@
-// Tabla de fechas por NIT (últimos dos dígitos)
+// Topes DIAN 2025 (en UVT y pesos)
+const UVT_2025 = 49798;
+const TOPE_PATRIMONIO_UVT = 4500; // UVT
+const TOPE_PATRIMONIO_PESOS = UVT_2025 * TOPE_PATRIMONIO_UVT; // $224.095.000
+const TOPE_OTROS_UVT = 1400; // UVT
+const TOPE_OTROS_PESOS = UVT_2025 * TOPE_OTROS_UVT; // $69.718.600
+
+// Tabla de fechas por NIT (últimos dos dígitos) - AÑO GRAVABLE 2025 (DECLARACIÓN 2026)
 const fechasPresentacion = {
-  "00": "24 de octubre de 2025", "99": "24 de octubre de 2025",
-  "01": "12 de agosto de 2025", "02": "12 de agosto de 2025",
-  "03": "13 de agosto de 2025", "04": "13 de agosto de 2025",
-  "05": "14 de agosto de 2025", "06": "14 de agosto de 2025",
-  "07": "15 de agosto de 2025", "08": "15 de agosto de 2025",
-  "09": "19 de agosto de 2025", "10": "19 de agosto de 2025",
-  "11": "20 de agosto de 2025", "12": "20 de agosto de 2025",
-  "13": "21 de agosto de 2025", "14": "21 de agosto de 2025",
-  "15": "22 de agosto de 2025", "16": "22 de agosto de 2025",
-  "17": "25 de agosto de 2025", "18": "25 de agosto de 2025",
-  "19": "26 de agosto de 2025", "20": "26 de agosto de 2025",
-  "21": "27 de agosto de 2025", "22": "27 de agosto de 2025",
-  "23": "28 de agosto de 2025", "24": "28 de agosto de 2025",
-  "25": "29 de agosto de 2025", "26": "29 de agosto de 2025",
-  "27": "1 de septiembre de 2025", "28": "1 de septiembre de 2025",
-  "29": "2 de septiembre de 2025", "30": "2 de septiembre de 2025",
-  "31": "3 de septiembre de 2025", "32": "3 de septiembre de 2025",
-  "33": "4 de septiembre de 2025", "34": "4 de septiembre de 2025",
-  "35": "5 de septiembre de 2025", "36": "5 de septiembre de 2025",
-  "37": "8 de septiembre de 2025", "38": "8 de septiembre de 2025",
-  "39": "9 de septiembre de 2025", "40": "9 de septiembre de 2025",
-  "41": "10 de septiembre de 2025", "42": "10 de septiembre de 2025",
-  "43": "11 de septiembre de 2025", "44": "11 de septiembre de 2025",
-  "45": "12 de septiembre de 2025", "46": "12 de septiembre de 2025",
-  "47": "15 de septiembre de 2025", "48": "15 de septiembre de 2025",
-  "49": "16 de septiembre de 2025", "50": "16 de septiembre de 2025",
-  "51": "17 de septiembre de 2025", "52": "17 de septiembre de 2025",
-  "53": "18 de septiembre de 2025", "54": "18 de septiembre de 2025",
-  "55": "19 de septiembre de 2025", "56": "19 de septiembre de 2025",
-  "57": "22 de septiembre de 2025", "58": "22 de septiembre de 2025",
-  "59": "23 de septiembre de 2025", "60": "23 de septiembre de 2025",
-  "61": "24 de septiembre de 2025", "62": "24 de septiembre de 2025",
-  "63": "25 de septiembre de 2025", "64": "25 de septiembre de 2025",
-  "65": "26 de septiembre de 2025", "66": "26 de septiembre de 2025",
-  "67": "1 de octubre de 2025", "68": "1 de octubre de 2025",
-  "69": "2 de octubre de 2025", "70": "2 de octubre de 2025",
-  "71": "3 de octubre de 2025", "72": "3 de octubre de 2025",
-  "73": "6 de octubre de 2025", "74": "6 de octubre de 2025",
-  "75": "7 de octubre de 2025", "76": "7 de octubre de 2025",
-  "77": "8 de octubre de 2025", "78": "8 de octubre de 2025",
-  "79": "9 de octubre de 2025", "80": "9 de octubre de 2025",
-  "81": "10 de octubre de 2025", "82": "10 de octubre de 2025",
-  "83": "14 de octubre de 2025", "84": "14 de octubre de 2025",
-  "85": "15 de octubre de 2025", "86": "15 de octubre de 2025",
-  "87": "16 de octubre de 2025", "88": "16 de octubre de 2025",
-  "89": "17 de octubre de 2025", "90": "17 de octubre de 2025",
-  "91": "20 de octubre de 2025", "92": "20 de octubre de 2025",
-  "93": "21 de octubre de 2025", "94": "21 de octubre de 2025",
-  "95": "22 de octubre de 2025", "96": "22 de octubre de 2025",
-  "97": "23 de octubre de 2025", "98": "23 de octubre de 2025"
+  "00": "26 de octubre de 2026", "99": "26 de octubre de 2026", // ← Corregido
+  "01": "12 de agosto de 2026", "02": "12 de agosto de 2026",
+  "03": "13 de agosto de 2026", "04": "13 de agosto de 2026",
+  "05": "14 de agosto de 2026", "06": "14 de agosto de 2026",
+  "07": "18 de agosto de 2026", "08": "18 de agosto de 2026",
+  "09": "19 de agosto de 2026", "10": "19 de agosto de 2026",
+  "11": "20 de agosto de 2026", "12": "20 de agosto de 2026",
+  "13": "21 de agosto de 2026", "14": "21 de agosto de 2026",
+  "15": "24 de agosto de 2026", "16": "24 de agosto de 2026",
+  "17": "25 de agosto de 2026", "18": "25 de agosto de 2026",
+  "19": "26 de agosto de 2026", "20": "26 de agosto de 2026",
+  "21": "27 de agosto de 2026", "22": "27 de agosto de 2026",
+  "23": "28 de agosto de 2026", "24": "28 de agosto de 2026",
+  "25": "31 de agosto de 2026", "26": "31 de agosto de 2026",
+  "27": "1 de septiembre de 2026", "28": "1 de septiembre de 2026",
+  "29": "2 de septiembre de 2026", "30": "2 de septiembre de 2026",
+  "31": "3 de septiembre de 2026", "32": "3 de septiembre de 2026",
+  "33": "4 de septiembre de 2026", "34": "4 de septiembre de 2026",
+  "35": "7 de septiembre de 2026", "36": "7 de septiembre de 2026",
+  "37": "8 de septiembre de 2026", "38": "8 de septiembre de 2026",
+  "39": "9 de septiembre de 2026", "40": "9 de septiembre de 2026",
+  "41": "10 de septiembre de 2026", "42": "10 de septiembre de 2026",
+  "43": "11 de septiembre de 2026", "44": "11 de septiembre de 2026",
+  "45": "14 de septiembre de 2026", "46": "14 de septiembre de 2026",
+  "47": "15 de septiembre de 2026", "48": "15 de septiembre de 2026",
+  "49": "16 de septiembre de 2026", "50": "16 de septiembre de 2026",
+  "51": "17 de septiembre de 2026", "52": "17 de septiembre de 2026",
+  "53": "18 de septiembre de 2026", "54": "18 de septiembre de 2026",
+  "55": "21 de septiembre de 2026", "56": "21 de septiembre de 2026",
+  "57": "22 de septiembre de 2026", "58": "22 de septiembre de 2026",
+  "59": "23 de septiembre de 2026", "60": "23 de septiembre de 2026",
+  "61": "24 de septiembre de 2026", "62": "24 de septiembre de 2026",
+  "63": "25 de septiembre de 2026", "64": "25 de septiembre de 2026",
+  "65": "28 de septiembre de 2026", "66": "28 de septiembre de 2026",
+  "67": "1 de octubre de 2026", "68": "1 de octubre de 2026",
+  "69": "2 de octubre de 2026", "70": "2 de octubre de 2026",
+  "71": "5 de octubre de 2026", "72": "5 de octubre de 2026",
+  "73": "6 de octubre de 2026", "74": "6 de octubre de 2026",
+  "75": "7 de octubre de 2026", "76": "7 de octubre de 2026",
+  "77": "8 de octubre de 2026", "78": "8 de octubre de 2026",
+  "79": "9 de octubre de 2026", "80": "9 de octubre de 2026",
+  "81": "13 de octubre de 2026", "82": "13 de octubre de 2026",
+  "83": "14 de octubre de 2026", "84": "14 de octubre de 2026",
+  "85": "15 de octubre de 2026", "86": "15 de octubre de 2026",
+  "87": "16 de octubre de 2026", "88": "16 de octubre de 2026",
+  "89": "19 de octubre de 2026", "90": "19 de octubre de 2026",
+  "91": "20 de octubre de 2026", "92": "20 de octubre de 2026",
+  "93": "21 de octubre de 2026", "94": "21 de octubre de 2026",
+  "95": "22 de octubre de 2026", "96": "22 de octubre de 2026",
+  "97": "23 de octubre de 2026", "98": "23 de octubre de 2026"
 };
 
 document.getElementById('rentaForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // Topes DIAN 2025
-  const TOPE_PATRIMONIO = 211792500;
-  const TOPE_OTROS = 65891000;
-
   // Obtener valores
+  const responsableIVA = document.getElementById('responsableIVA').value === 'si';
   const patrimonio = parseFloat(document.getElementById('patrimonio').value) || 0;
   const ingresos = parseFloat(document.getElementById('ingresos').value) || 0;
   const consumosTC = parseFloat(document.getElementById('consumosTC').value) || 0;
-  const depositos = parseFloat(document.getElementById('depositos').value) || 0;
   const compras = parseFloat(document.getElementById('compras').value) || 0;
-  const responsableIVA = document.getElementById('responsableIVA').value === 'si';
+  const depositos = parseFloat(document.getElementById('depositos').value) || 0;
   const nit = document.getElementById('nit').value;
   const ultimosDos = nit.slice(-2).padStart(2, "0");
 
-  // Evaluar condiciones
-  const debeDeclarar = 
-    patrimonio >= TOPE_PATRIMONIO ||
-    ingresos >= TOPE_OTROS ||
-    consumosTC >= TOPE_OTROS ||
-    depositos >= TOPE_OTROS ||
-    compras >= TOPE_OTROS ||
-    responsableIVA;
+  // Evaluar condiciones (nuevos criterios)
+  let debeDeclarar = false;
+  let razones = [];
+
+  // Si es responsable de IVA, debe declarar
+  if (responsableIVA) {
+    debeDeclarar = true;
+    razones.push("Es responsable del IVA");
+  } else {
+    // Verificar topes para NO responsables de IVA
+    if (patrimonio > TOPE_PATRIMONIO_PESOS) {
+      debeDeclarar = true;
+      razones.push(`Patrimonio bruto ($ ${patrimonio.toLocaleString()}) > ${TOPE_PATRIMONIO_PESOS.toLocaleString()}`);
+    }
+
+    const sumaOtros = ingresos + consumosTC + compras + depositos;
+    if (sumaOtros > TOPE_OTROS_PESOS) {
+      debeDeclarar = true;
+      razones.push(`Suma de ingresos/consumos/depósitos ($ ${sumaOtros.toLocaleString()}) > ${TOPE_OTROS_PESOS.toLocaleString()}`);
+    }
+  }
 
   // Asignar fecha de presentación (si aplica)
   let fechaPresentacion = "";
   if (debeDeclarar && fechasPresentacion[ultimosDos]) {
-    fechaPresentacion = `<br><strong>Fecha límite de presentación:</strong> ${fechasPresentacion[ultimosDos]}`;
+    fechaPresentacion = `<br><strong>Fecha límite:</strong> ${fechasPresentacion[ultimosDos]}`;
   }
 
   // Mostrar resultado
   const resultadoDiv = document.getElementById('resultado');
   resultadoDiv.className = 'resultado ' + (debeDeclarar ? 'debe' : 'no-debe');
   resultadoDiv.innerHTML = `
-    ${debeDeclarar ? '✅ <strong>¡DEBES DECLARAR RENTA!</strong>' : '❌ <strong>No estás obligado a declarar.</strong>'}
+    ${debeDeclarar ? 
+      `✅ <strong>¡DEBES DECLARAR RENTA!</strong><br><small>Motivo(s): ${razones.join(", ")}</small>` : 
+      '❌ <strong>No estás obligado a declarar.</strong>'}
     ${fechaPresentacion}
   `;
 
   // Habilitar botón PDF
   document.getElementById('btnPDF').disabled = false;
-  window.appData = { debeDeclarar, ultimosDos, fechaPresentacion, nit };
+  window.appData = { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones };
 });
 
 // Generar PDF
 document.getElementById('btnPDF').addEventListener('click', function() {
-  const { debeDeclarar, ultimosDos, fechaPresentacion, nit } = window.appData;
+  const { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones } = window.appData;
   const doc = new jsPDF();
 
   // Configuración del PDF
@@ -117,14 +135,15 @@ document.getElementById('btnPDF').addEventListener('click', function() {
   doc.text(`Obligación: ${debeDeclarar ? 'DECLARAR RENTA' : 'NO DECLARAR RENTA'}`, 20, 60);
   if (debeDeclarar) {
     doc.text(`Fecha límite: ${fechasPresentacion[ultimosDos]}`, 20, 70);
+    doc.text(`Motivo(s): ${razones.join(", ")}`, 20, 80);
   }
 
   // Firma del contador
   doc.setFont("helvetica", "bold");
-  doc.text("MG Esp CP Mario Andrés Narváez Delgado", 20, 100);
+  doc.text("MG Esp CP Mario Andrés Narváez Delgado", 20, 110);
   doc.setFont("helvetica", "normal");
-  doc.text("Contador Públicico", 20, 105);
-  doc.text("Cédula Profesional: [Número]", 20, 110);
+  doc.text("Contador Públicico", 20, 115);
+  doc.text("Cédula Profesional: [Número]", 20, 120);
 
   // Guardar PDF
   doc.save(`Certificado_Renta_${nit}.pdf`);
