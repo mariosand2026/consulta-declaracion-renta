@@ -80,6 +80,7 @@ document.getElementById('rentaForm').addEventListener('submit', function(e) {
     debeDeclarar = true;
     razones.push("Es responsable del IVA");
   } else {
+    // Verificar cada criterio individualmente
     if (patrimonio > TOPE_PATRIMONIO_PESOS) {
       debeDeclarar = true;
       razones.push(`Patrimonio bruto ($ ${patrimonio.toLocaleString()}) > ${TOPE_PATRIMONIO_PESOS.toLocaleString()}`);
@@ -122,49 +123,36 @@ document.getElementById('rentaForm').addEventListener('submit', function(e) {
     ${fechaPresentacion}
   `;
 
-  // Habilitar botón PDF SOLO si debe declarar
-  const btnPDF = document.getElementById('btnPDF');
-  if (debeDeclarar) {
-    btnPDF.disabled = false;
-    btnPDF.style.display = 'block';
-    // Guardar datos para el PDF
-    window.appData = { 
-      debeDeclarar, 
-      ultimosDos, 
-      nit, 
-      razones,
-      fechaLarga: fechasPresentacion[ultimosDos] 
-    };
-  } else {
-    btnPDF.disabled = true;
-    btnPDF.style.display = 'none';
-  }
+  // Habilitar botón PDF
+  document.getElementById('btnPDF').disabled = false;
+  window.appData = { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones };
 });
 
 // Generar PDF
 document.getElementById('btnPDF').addEventListener('click', function() {
-  if (!window.appData) {
-    alert("Error: No hay datos disponibles. Intenta verificar nuevamente.");
-    return;
-  }
-
   try {
-    const { debeDeclarar, ultimosDos, nit, razones, fechaLarga } = window.appData;
+    const { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones } = window.appData;
     
-    // Verificar jsPDF
-    if (typeof jsPDF === 'undefined') {
-      throw new Error("jsPDF no se cargó. Asegúrate de tener el archivo jspdf.min.js en tu proyecto.");
+    if (!nit || !debeDeclarar) {
+      alert("Error: No hay datos válidos para generar el PDF.");
+      return;
     }
-    
+
     const doc = new jsPDF();
     
-    // Configurar PDF
+    // Configuración del PDF
     doc.setFont("helvetica");
     doc.setFontSize(12);
+    
+    // Título
+    doc.setFontSize(18);
     doc.text("Certificado de Obligación Tributaria", 105, 25, { align: "center" });
+    doc.setLineWidth(0.5);
     doc.line(20, 30, 190, 30);
     
+    // Contenido
     let yPosition = 50;
+    doc.setFontSize(12);
     doc.text(`NIT: ${nit}`, 20, yPosition);
     yPosition += 10;
     doc.text(`Últimos 2 dígitos: ${ultimosDos}`, 20, yPosition);
@@ -173,22 +161,26 @@ document.getElementById('btnPDF').addEventListener('click', function() {
     
     if (debeDeclarar) {
       yPosition += 15;
-      doc.text(`Fecha límite: ${fechaLarga}`, 20, yPosition);
+      doc.text(`Fecha límite: ${fechasPresentacion[ultimosDos]}`, 20, yPosition);
       yPosition += 10;
       doc.text(`Motivo(s): ${razones.join(", ")}`, 20, yPosition);
     }
     
+    // Firma del contador
     yPosition += 20;
     doc.setFont("helvetica", "bold");
     doc.text("MG Esp CP Mario Andrés Narváez Delgado", 20, yPosition);
     yPosition += 6;
     doc.setFont("helvetica", "normal");
     doc.text("Contador Públicico", 20, yPosition);
+    yPosition += 6;
+    doc.text("Cédula Profesional: [Número]", 20, yPosition);
     
+    // Guardar PDF
     doc.save(`Certificado_Renta_${nit}.pdf`);
     
   } catch (error) {
-    console.error("Error detallado:", error);
-    alert(`Error: ${error.message}`);
+    console.error("Error al generar PDF:", error);
+    alert("Error al generar el PDF. Revisa la consola para más detalles.");
   }
 });
