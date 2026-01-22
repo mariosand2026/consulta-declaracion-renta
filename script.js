@@ -80,7 +80,6 @@ document.getElementById('rentaForm').addEventListener('submit', function(e) {
     debeDeclarar = true;
     razones.push("Es responsable del IVA");
   } else {
-    // Verificar cada criterio individualmente
     if (patrimonio > TOPE_PATRIMONIO_PESOS) {
       debeDeclarar = true;
       razones.push(`Patrimonio bruto ($ ${patrimonio.toLocaleString()}) > ${TOPE_PATRIMONIO_PESOS.toLocaleString()}`);
@@ -123,21 +122,37 @@ document.getElementById('rentaForm').addEventListener('submit', function(e) {
     ${fechaPresentacion}
   `;
 
-  // Habilitar botón PDF
-  document.getElementById('btnPDF').disabled = false;
-  window.appData = { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones };
+  // Habilitar botón PDF solo si debe declarar
+  const btnPDF = document.getElementById('btnPDF');
+  btnPDF.disabled = false;
+  btnPDF.style.display = debeDeclarar ? 'block' : 'none';
+  
+  // Guardar datos para el PDF
+  window.appData = { 
+    debeDeclarar, 
+    ultimosDos, 
+    fechaPresentacion, 
+    nit, 
+    razones,
+    fechaLarga: fechasPresentacion[ultimosDos] 
+  };
 });
 
 // Generar PDF
 document.getElementById('btnPDF').addEventListener('click', function() {
   try {
-    const { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones } = window.appData;
-    
-    if (!nit || !debeDeclarar) {
-      alert("Error: No hay datos válidos para generar el PDF.");
-      return;
+    // Validar datos
+    if (!window.appData || !window.appData.nit) {
+      throw new Error("No hay datos disponibles para generar el PDF.");
     }
-
+    
+    const { debeDeclarar, ultimosDos, nit, razones, fechaLarga } = window.appData;
+    
+    // Validar jsPDF
+    if (typeof jsPDF === 'undefined') {
+      throw new Error("La librería jsPDF no se cargó correctamente.");
+    }
+    
     const doc = new jsPDF();
     
     // Configuración del PDF
@@ -161,7 +176,7 @@ document.getElementById('btnPDF').addEventListener('click', function() {
     
     if (debeDeclarar) {
       yPosition += 15;
-      doc.text(`Fecha límite: ${fechasPresentacion[ultimosDos]}`, 20, yPosition);
+      doc.text(`Fecha límite: ${fechaLarga}`, 20, yPosition);
       yPosition += 10;
       doc.text(`Motivo(s): ${razones.join(", ")}`, 20, yPosition);
     }
@@ -181,6 +196,6 @@ document.getElementById('btnPDF').addEventListener('click', function() {
     
   } catch (error) {
     console.error("Error al generar PDF:", error);
-    alert("Error al generar el PDF. Revisa la consola para más detalles.");
+    alert(`Error: ${error.message}\n\nRevisa la consola para más detalles.`);
   }
 });
