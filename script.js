@@ -7,7 +7,7 @@ const TOPE_OTROS_PESOS = UVT_2025 * TOPE_OTROS_UVT; // $69.718.600
 
 // Tabla de fechas por NIT (últimos dos dígitos) - AÑO GRAVABLE 2025 (DECLARACIÓN 2026)
 const fechasPresentacion = {
-  "00": "26 de octubre de 2026", "99": "26 de octubre de 2026", // ← Corregido
+  "00": "26 de octubre de 2026", "99": "26 de octubre de 2026",
   "01": "12 de agosto de 2026", "02": "12 de agosto de 2026",
   "03": "13 de agosto de 2026", "04": "13 de agosto de 2026",
   "05": "14 de agosto de 2026", "06": "14 de agosto de 2026",
@@ -120,30 +120,49 @@ document.getElementById('btnPDF').addEventListener('click', function() {
   const { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones } = window.appData;
   const doc = new jsPDF();
 
-  // Configuración del PDF
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(16);
-  doc.text("Certificado de Obligación Tributaria", 20, 20);
-  doc.setLineWidth(0.5);
-  doc.line(20, 25, 190, 25);
-
-  // Contenido
-  doc.setFont("helvetica", "normal");
+  // --- ESTILOS MEJORADOS ---
+  doc.setFont("helvetica");
   doc.setFontSize(12);
-  doc.text(`NIT: ${nit}`, 20, 40);
-  doc.text(`Últimos 2 dígitos: ${ultimosDos}`, 20, 50);
-  doc.text(`Obligación: ${debeDeclarar ? 'DECLARAR RENTA' : 'NO DECLARAR RENTA'}`, 20, 60);
+
+  // Título (centrado)
+  doc.setFontSize(18);
+  doc.text("Certificado de Obligación Tributaria", 105, 25, { align: "center" });
+  
+  // Línea divisoria
+  doc.setLineWidth(0.5);
+  doc.line(20, 30, 190, 30);
+
+  // Contenido (con saltos de línea)
+  doc.setFontSize(12);
+  let yPosition = 50;
+  
+  doc.text(`NIT: ${nit}`, 20, yPosition);
+  yPosition += 10;
+  
+  doc.text(`Últimos 2 dígitos: ${ultimosDos}`, 20, yPosition);
+  yPosition += 10;
+  
+  doc.text(`Obligación: ${debeDeclarar ? 'DECLARAR RENTA' : 'NO DECLARAR RENTA'}`, 20, yPosition);
+  yPosition += 15;
+  
   if (debeDeclarar) {
-    doc.text(`Fecha límite: ${fechasPresentacion[ultimosDos]}`, 20, 70);
-    doc.text(`Motivo(s): ${razones.join(", ")}`, 20, 80);
+    doc.text(`Fecha límite: ${fechasPresentacion[ultimosDos]}`, 20, yPosition);
+    yPosition += 10;
+    doc.text(`Motivo(s): ${razones.join(", ")}`, 20, yPosition);
+    yPosition += 20;
+  } else {
+    yPosition += 10;
   }
 
   // Firma del contador
   doc.setFont("helvetica", "bold");
-  doc.text("MG Esp CP Mario Andrés Narváez Delgado", 20, 110);
+  doc.text("MG Esp CP Mario Andrés Narváez Delgado", 20, yPosition);
+  yPosition += 6;
+  
   doc.setFont("helvetica", "normal");
-  doc.text("Contador Públicico", 20, 115);
-  doc.text("Cédula Profesional: [Número]", 20, 120);
+  doc.text("Contador Públicico", 20, yPosition);
+  yPosition += 6;
+  doc.text("Cédula Profesional: [Número]", 20, yPosition);
 
   // Guardar PDF
   doc.save(`Certificado_Renta_${nit}.pdf`);
