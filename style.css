@@ -61,10 +61,19 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s;
+  margin-bottom: 10px;
 }
 
 button:hover {
   background: #2980b9;
+}
+
+#btnPDF {
+  background: #27ae60;
+}
+
+#btnPDF:hover {
+  background: #219653;
 }
 
 .resultado {
@@ -86,4 +95,15 @@ button:hover {
   background: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+footer img {
+  margin-top: 10px;
 }
