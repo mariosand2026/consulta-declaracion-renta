@@ -77,7 +77,7 @@ button:hover {
 
 #btnPDF {
   background: #27ae60;
-  display: none; /* Se muestra solo si debe declarar */
+  display: none;
 }
 
 #btnPDF:hover {
