@@ -12,47 +12,7 @@
     <p><strong>Año gravable:</strong> 2025 | <strong>Topes DIAN 2026</strong></p>
     
     <form id="rentaForm">
-      <div class="input-group">
-        <label>1. ¿Eres responsable del IVA?</label>
-        <select id="responsableIVA" required>
-          <option value="">Selecciona...</option>
-          <option value="si">Sí</option>
-          <option value="no">No</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label>2. Patrimonio bruto al 31/12/2025 ($)</label>
-        <input type="number" id="patrimonio" placeholder="Ej: 224095000" required>
-        <small>UVT 2025: $49.798 x 4.500 = $224.095.000</small>
-      </div>
-
-      <div class="input-group">
-        <label>3. Ingresos brutos en 2025 ($)</label>
-        <input type="number" id="ingresos" placeholder="Ej: 69718600" required>
-        <small>UVT 2025: $49.798 x 1.400 = $69.718.600</small>
-      </div>
-
-      <div class="input-group">
-        <label>4. Consumos con tarjeta de crédito ($)</label>
-        <input type="number" id="consumosTC" placeholder="Ej: 50000000" required>
-      </div>
-
-      <div class="input-group">
-        <label>5. Compras y consumos (sin TC) ($)</label>
-        <input type="number" id="compras" placeholder="Ej: 30000000" required>
-      </div>
-
-      <div class="input-group">
-        <label>6. Consignaciones/depósitos/inversiones ($)</label>
-        <input type="number" id="depositos" placeholder="Ej: 20000000" required>
-      </div>
-
-      <div class="input-group">
-        <label>7. NIT (sin dígito de verificación)</label>
-        <input type="text" id="nit" placeholder="Ej: 12345678" maxlength="8" pattern="\d{1,8}" required>
-      </div>
-
+      <!-- ... (mismo HTML que antes) ... -->
       <button type="submit">Verificar</button>
       <button type="button" id="btnPDF" disabled>📄 Generar Certificado PDF</button>
     </form>
@@ -60,15 +20,14 @@
     <div id="resultado" class="resultado"></div>
   </div>
 
-  <!-- Créditos del creador -->
   <footer>
     <p>Elaborado por: <strong>MG Esp CP Mario Andrés Narváez Delgado</strong><br>
     Contador Públicico | <a href="mailto:tu-email@ejemplo.com">Contacto</a></p>
     <img src="logo.png" alt="Logo Contador" style="height: 50px;">
   </footer>
 
-  <!-- jsPDF local (descarga el archivo desde https://cdnjs.com/libraries/jspdf) -->
-  <script src="jspdf.min.js"></script>
+  <!-- jsPDF desde GitHub Raw (¡Ajusta TU-USUARIO!) -->
+  <script src="https://raw.githubusercontent.com/mariosand2026/consulta-declaracion-renta/main/jspdf.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
