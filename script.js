@@ -72,7 +72,7 @@ document.getElementById('rentaForm').addEventListener('submit', function(e) {
   const nit = document.getElementById('nit').value;
   const ultimosDos = nit.slice(-2).padStart(2, "0");
 
-  // Evaluar condiciones
+  // Evaluar condiciones (cada una por separado)
   let debeDeclarar = false;
   let razones = [];
 
@@ -80,15 +80,30 @@ document.getElementById('rentaForm').addEventListener('submit', function(e) {
     debeDeclarar = true;
     razones.push("Es responsable del IVA");
   } else {
+    // Verificar cada criterio individualmente
     if (patrimonio > TOPE_PATRIMONIO_PESOS) {
       debeDeclarar = true;
       razones.push(`Patrimonio bruto ($ ${patrimonio.toLocaleString()}) > ${TOPE_PATRIMONIO_PESOS.toLocaleString()}`);
     }
-
-    const sumaOtros = ingresos + consumosTC + compras + depositos;
-    if (sumaOtros > OTROS_PESOS) {
+    
+    if (ingresos > OTROS_PESOS) {
       debeDeclarar = true;
-      razones.push(`Suma de ingresos/consumos/depósitos ($ ${sumaOtros.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
+      razones.push(`Ingresos brutos ($ ${ingresos.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
+    }
+    
+    if (consumosTC > OTROS_PESOS) {
+      debeDeclarar = true;
+      razones.push(`Consumos con tarjeta de crédito ($ ${consumosTC.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
+    }
+    
+    if (compras > OTROS_PESOS) {
+      debeDeclarar = true;
+      razones.push(`Compras y consumos ($ ${compras.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
+    }
+    
+    if (depositos > OTROS_PESOS) {
+      debeDeclarar = true;
+      razones.push(`Depósitos/inversiones ($ ${depositos.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
     }
   }
 
