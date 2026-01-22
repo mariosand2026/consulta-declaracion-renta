@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¿Debo Declarar Renta?</title>
+  <title>¿Debo Declarar Renta? | MG Esp CP Mario Andrés Narváez Delgado</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -46,12 +46,27 @@
         </select>
       </div>
 
+      <div class="input-group">
+        <label>7. NIT (sin dígito de verificación)</label>
+        <input type="text" id="nit" placeholder="Ej: 12345678" maxlength="8" pattern="\d{1,8}" required>
+      </div>
+
       <button type="submit">Verificar</button>
+      <button type="button" id="btnPDF" disabled>📄 Generar Certificado PDF</button>
     </form>
 
     <div id="resultado" class="resultado"></div>
   </div>
 
+  <!-- Créditos del creador -->
+  <footer>
+    <p>Elaborado por: <strong>MG Esp CP Mario Andrés Narváez Delgado</strong><br>
+    Contador Públicico | <a href="mailto:tu-email@ejemplo.com">Contacto</a></p>
+    <img src="logo.png" alt="Logo Contador" style="height: 50px;">
+  </footer>
+
+  <!-- jsPDF CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
