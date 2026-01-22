@@ -42,6 +42,13 @@ label {
   color: #34495e;
 }
 
+small {
+  color: #7f8c8d;
+  font-size: 12px;
+  display: block;
+  margin-top: 5px;
+}
+
 input, select {
   width: 100%;
   padding: 12px;
