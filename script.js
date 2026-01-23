@@ -142,7 +142,7 @@ document.getElementById("btnPDF").addEventListener("click", function () {
   logo.onload = function () {
 
     // LOGO
-    doc.addImage(logo, "PNG", 80, 10, 50, 50);
+    doc.addImage(logo, "PNG", 80, 80, 50, 50);
 
     // TÍTULO
     doc.setFontSize(18);
