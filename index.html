@@ -65,22 +65,51 @@
     <div id="resultado" class="resultado"></div>
   </div>
 
-  <!-- CERTIFICADO OCULTO PARA PDF -->
-  <div id="certificadoPDF" class="certificado" style="display:none;">
-    <h1 style="text-align:center;">CERTIFICADO DE OBLIGACIÓN TRIBUTARIA</h1>
-    <hr>
+  <div id="certificadoPDF" style="
+  display:none;
+  width: 800px;
+  padding: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+">
 
-    <p><strong>NIT:</strong> <span id="pdfNit"></span></p>
-    <p><strong>Resultado:</strong> <span id="pdfResultado"></span></p>
-    <p><strong>Fecha límite:</strong> <span id="pdfFecha"></span></p>
+  <h1 style="
+    text-align:center;
+    font-size:24px;
+    margin-bottom:10px;
+  ">
+    CERTIFICADO DE OBLIGACIÓN TRIBUTARIA
+  </h1>
 
-    <p><strong>Motivos:</strong></p>
-    <ul id="pdfMotivos"></ul>
+  <hr style="margin-bottom:20px;">
 
-    <br><br>
-    <p><strong>MG Esp CP Mario Andrés Narváez Delgado</strong></p>
-    <p>Contador Público</p>
-  </div>
+  <p style="font-size:14px;">
+    <strong>NIT:</strong> <span id="pdfNit"></span>
+  </p>
+
+  <p style="font-size:14px;">
+    <strong>Resultado:</strong>
+    <span id="pdfResultado" style="font-weight:bold;"></span>
+  </p>
+
+  <p style="font-size:14px;">
+    <strong>Fecha límite:</strong> <span id="pdfFecha"></span>
+  </p>
+
+  <br>
+
+  <p style="font-size:14px;"><strong>Motivos:</strong></p>
+
+  <ul id="pdfMotivos" style="font-size:13px; margin-left:20px;"></ul>
+
+  <br><br><br>
+
+  <p style="font-size:13px;">
+    <strong>MG Esp CP Mario Andrés Narváez Delgado</strong><br>
+    Contador Público
+  </p>
+
+</div>
 
   <!-- FOOTER -->
   <footer>
