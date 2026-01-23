@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>¿Debo Declarar Renta 2026? | MG Esp CP Mario Andrés Narváez Delgado</title>
-  <!-- CSS desde GitHub Pages (ruta absoluta) -->
+
+  <!-- CSS desde GitHub Pages -->
   <link rel="stylesheet" href="https://mariosand2026.github.io/consulta-declaracion-renta/style.css">
 </head>
+
 <body>
   <div class="container">
     <h1>📊 ¿Debes Declarar Renta en Colombia? (2026)</h1>
     <p><strong>Año gravable:</strong> 2025 | <strong>Topes DIAN 2026</strong></p>
-    
+
+    <!-- FORMULARIO -->
     <form id="rentaForm">
       <div class="input-group">
         <label>1. ¿Eres responsable del IVA?</label>
@@ -45,7 +48,7 @@
       </div>
 
       <div class="input-group">
-        <label>6. Consignaciones/depósitos/inversiones ($)</label>
+        <label>6. Consignaciones / depósitos / inversiones ($)</label>
         <input type="number" id="depositos" placeholder="Ej: 20000000" required>
       </div>
 
@@ -55,21 +58,49 @@
       </div>
 
       <button type="submit">Verificar</button>
-      <button type="button" id="btnPDF">📄 Generar Certificado PDF</button>
+      <button type="button" id="btnPDF" disabled>📄 Generar Certificado PDF</button>
     </form>
 
+    <!-- RESULTADO -->
     <div id="resultado" class="resultado"></div>
   </div>
 
-  <!-- Créditos del creador -->
+  <!-- CERTIFICADO OCULTO PARA PDF -->
+  <div id="certificadoPDF" class="certificado" style="display:none;">
+    <h1 style="text-align:center;">CERTIFICADO DE OBLIGACIÓN TRIBUTARIA</h1>
+    <hr>
+
+    <p><strong>NIT:</strong> <span id="pdfNit"></span></p>
+    <p><strong>Resultado:</strong> <span id="pdfResultado"></span></p>
+    <p><strong>Fecha límite:</strong> <span id="pdfFecha"></span></p>
+
+    <p><strong>Motivos:</strong></p>
+    <ul id="pdfMotivos"></ul>
+
+    <br><br>
+    <p><strong>MG Esp CP Mario Andrés Narváez Delgado</strong></p>
+    <p>Contador Público</p>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
-    <p>Elaborado por: <strong>MG Esp CP Mario Andrés Narváez Delgado</strong><br>
-    Contador Públicico | <a href="mailto:marioandresnarvaez@gmail.com">Contacto</a></p>
-    <img src="https://mariosand2026.github.io/consulta-declaracion-renta/logo.png" alt="Logo Contador" style="height: 50px;">
+    <p>
+      Elaborado por: <strong>MG Esp CP Mario Andrés Narváez Delgado</strong><br>
+      Contador Público |
+      <a href="mailto:marioandresnarvaez@gmail.com">Contacto</a>
+    </p>
+    <img
+      src="https://mariosand2026.github.io/consulta-declaracion-renta/logo.png"
+      alt="Logo Contador"
+      style="height:50px;"
+    >
   </footer>
 
-  <!-- jsPDF desde GitHub Pages (ruta absoluta) -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="script.js"></script>
+  <!-- LIBRERÍAS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- JS PRINCIPAL -->
+  <script src="script.js"></script>
 </body>
 </html>
