@@ -1,11 +1,15 @@
-// Topes DIAN 2025 (en UVT y pesos)
+/***************************************************
+ *  TOPES DIAN 2025 (Año gravable 2025 – Declara 2026)
+ ***************************************************/
 const UVT_2025 = 49798;
 const TOPE_PATRIMONIO_UVT = 4500;
-const TOPE_PATRIMONIO_PESOS = UVT_2025 * TOPE_PATRIMONIO_UVT; // $224.095.000
+const TOPE_PATRIMONIO_PESOS = UVT_2025 * TOPE_PATRIMONIO_UVT;
 const TOPE_OTROS_UVT = 1400;
-const OTROS_PESOS = UVT_2025 * TOPE_OTROS_UVT; // $69.718.600
+const OTROS_PESOS = UVT_2025 * TOPE_OTROS_UVT;
 
-// Tabla de fechas por NIT (últimos dos dígitos) - AÑO GRAVABLE 2025 (DECLARACIÓN 2026)
+/***************************************************
+ *  FECHAS DE PRESENTACIÓN POR NIT
+ ***************************************************/
 const fechasPresentacion = {
   "00": "26 de octubre de 2026", "99": "26 de octubre de 2026",
   "01": "12 de agosto de 2026", "02": "12 de agosto de 2026",
@@ -59,20 +63,21 @@ const fechasPresentacion = {
   "97": "23 de octubre de 2026", "98": "23 de octubre de 2026"
 };
 
-document.getElementById('rentaForm').addEventListener('submit', function(e) {
+/***************************************************
+ *  FORMULARIO
+ ***************************************************/
+document.getElementById('rentaForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  // Obtener valores
   const responsableIVA = document.getElementById('responsableIVA').value === 'si';
   const patrimonio = parseFloat(document.getElementById('patrimonio').value) || 0;
   const ingresos = parseFloat(document.getElementById('ingresos').value) || 0;
   const consumosTC = parseFloat(document.getElementById('consumosTC').value) || 0;
   const compras = parseFloat(document.getElementById('compras').value) || 0;
   const depositos = parseFloat(document.getElementById('depositos').value) || 0;
-  const nit = document.getElementById('nit').value;
+  const nit = document.getElementById('nit').value.trim();
   const ultimosDos = nit.slice(-2).padStart(2, "0");
 
-  // Evaluar condiciones (cada una por separado)
   let debeDeclarar = false;
   let razones = [];
 
@@ -80,107 +85,51 @@ document.getElementById('rentaForm').addEventListener('submit', function(e) {
     debeDeclarar = true;
     razones.push("Es responsable del IVA");
   } else {
-    // Verificar cada criterio individualmente
-    if (patrimonio > TOPE_PATRIMONIO_PESOS) {
-      debeDeclarar = true;
-      razones.push(`Patrimonio bruto ($ ${patrimonio.toLocaleString()}) > ${TOPE_PATRIMONIO_PESOS.toLocaleString()}`);
-    }
-    
-    if (ingresos > OTROS_PESOS) {
-      debeDeclarar = true;
-      razones.push(`Ingresos brutos ($ ${ingresos.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
-    }
-    
-    if (consumosTC > OTROS_PESOS) {
-      debeDeclarar = true;
-      razones.push(`Consumos con tarjeta de crédito ($ ${consumosTC.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
-    }
-    
-    if (compras > OTROS_PESOS) {
-      debeDeclarar = true;
-      razones.push(`Compras y consumos ($ ${compras.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
-    }
-    
-    if (depositos > OTROS_PESOS) {
-      debeDeclarar = true;
-      razones.push(`Depósitos/inversiones ($ ${depositos.toLocaleString()}) > ${OTROS_PESOS.toLocaleString()}`);
-    }
+    if (patrimonio > TOPE_PATRIMONIO_PESOS) razones.push("Patrimonio superior al tope");
+    if (ingresos > OTROS_PESOS) razones.push("Ingresos superiores al tope");
+    if (consumosTC > OTROS_PESOS) razones.push("Consumos con TC superiores al tope");
+    if (compras > OTROS_PESOS) razones.push("Compras superiores al tope");
+    if (depositos > OTROS_PESOS) razones.push("Depósitos superiores al tope");
+    if (razones.length > 0) debeDeclarar = true;
   }
 
-  // Asignar fecha de presentación
-  let fechaPresentacion = "";
-  if (debeDeclarar && fechasPresentacion[ultimosDos]) {
-    fechaPresentacion = `<br><strong>Fecha límite:</strong> ${fechasPresentacion[ultimosDos]}`;
-  }
-
-  // Mostrar resultado
   const resultadoDiv = document.getElementById('resultado');
   resultadoDiv.className = 'resultado ' + (debeDeclarar ? 'debe' : 'no-debe');
-  resultadoDiv.innerHTML = `
-    ${debeDeclarar ? 
-      `✅ <strong>¡DEBES DECLARAR RENTA!</strong><br><small>Motivo(s): ${razones.join(", ")}</small>` : 
-      '❌ <strong>No estás obligado a declarar.</strong>'}
-    ${fechaPresentacion}
-  `;
+  resultadoDiv.innerHTML = debeDeclarar
+    ? `✅ <strong>¡DEBES DECLARAR RENTA!</strong><br><small>${razones.join(", ")}</small><br><strong>Fecha límite:</strong> ${fechasPresentacion[ultimosDos]}`
+    : '❌ <strong>No estás obligado a declarar.</strong>';
 
-  // Habilitar botón PDF
   document.getElementById('btnPDF').disabled = false;
-  window.appData = { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones };
+
+  window.appData = { debeDeclarar, nit, ultimosDos, razones };
 });
 
-// Generar PDF
-document.getElementById('btnPDF').addEventListener('click', function() {
+/***************************************************
+ *  GENERAR PDF
+ ***************************************************/
+document.getElementById('btnPDF').addEventListener('click', function () {
   try {
-    const { debeDeclarar, ultimosDos, fechaPresentacion, nit, razones } = window.appData;
-    
-    if (!nit || !debeDeclarar) {
-      alert("Error: No hay datos válidos para generar el PDF.");
-      return;
-    }
+    const { jsPDF } = window.jspdf;
+    const { debeDeclarar, nit, ultimosDos, razones } = window.appData;
 
     const doc = new jsPDF();
-    
-    // Configuración del PDF
-    doc.setFont("helvetica");
-    doc.setFontSize(12);
-    
-    // Título
     doc.setFontSize(18);
-    doc.text("Certificado de Obligación Tributaria", 105, 25, { align: "center" });
-    doc.setLineWidth(0.5);
-    doc.line(20, 30, 190, 30);
-    
-    // Contenido
-    let yPosition = 50;
+    doc.text("Certificado de Obligación Tributaria", 105, 20, { align: "center" });
+
     doc.setFontSize(12);
-    doc.text(`NIT: ${nit}`, 20, yPosition);
-    yPosition += 10;
-    doc.text(`Últimos 2 dígitos: ${ultimosDos}`, 20, yPosition);
-    yPosition += 10;
-    doc.text(`Obligación: ${debeDeclarar ? 'DECLARAR RENTA' : 'NO DECLARAR RENTA'}`, 20, yPosition);
-    
-    if (debeDeclarar) {
-      yPosition += 15;
-      doc.text(`Fecha límite: ${fechasPresentacion[ultimosDos]}`, 20, yPosition);
-      yPosition += 10;
-      doc.text(`Motivo(s): ${razones.join(", ")}`, 20, yPosition);
-    }
-    
-    // Firma del contador
-    yPosition += 20;
-    doc.setFont("helvetica", "bold");
-    doc.text("MG Esp CP Mario Andrés Narváez Delgado", 20, yPosition);
-    yPosition += 6;
-    doc.setFont("helvetica", "normal");
-    doc.text("Contador Públicico", 20, yPosition);
-    yPosition += 6;
-    doc.text("Cédula Profesional: [Número]", 20, yPosition);
-    
-    // Guardar PDF
+    doc.text(`NIT: ${nit}`, 20, 40);
+    doc.text(`Resultado: ${debeDeclarar ? "OBLIGADO A DECLARAR" : "NO OBLIGADO"}`, 20, 50);
+    doc.text(`Fecha límite: ${fechasPresentacion[ultimosDos]}`, 20, 60);
+
+    doc.text("Motivos:", 20, 75);
+    razones.forEach((r, i) => doc.text(`- ${r}`, 25, 85 + i * 8));
+
+    doc.text("MG Esp CP Mario Andrés Narváez Delgado", 20, 140);
+    doc.text("Contador Público", 20, 148);
+
     doc.save(`Certificado_Renta_${nit}.pdf`);
-    
-  } catch (error) {
-    console.error("Error al generar PDF:", error);
-    alert("Error al generar el PDF. Revisa la consola para más detalles.");
+  } catch (e) {
+    console.error(e);
+    alert("Error generando el PDF. Revisa la consola.");
   }
 });
